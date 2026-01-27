@@ -1,0 +1,136 @@
+//buildscript {
+//  configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
+//}
+plugins {
+  alias libs.plugins.febit.java
+  alias libs.plugins.febit.maven.publish
+  alias libs.plugins.febit.codegen.module
+  alias libs.plugins.license
+}
+
+group = 'org.febit.boot.devkit'
+version = '4.0.0-SNAPSHOT'
+description = 'Febit Boot Devkit'
+
+ext {
+}
+
+allprojects {
+  apply plugin: 'com.github.hierynomus.license'
+
+  group = rootProject.group
+  version = rootProject.version
+
+  repositories {
+    mavenCentral()
+  }
+
+  standardMavenPublish {
+    pom {
+      customPom(it)
+    }
+  }
+
+  codegenModule {
+    defaultTemplate = fromFile("$rootDir/etc/module.java.tmpl")
+  }
+
+  license {
+    mapping {
+      java = 'SLASHSTAR_STYLE'
+    }
+    include '**/*.java'
+    exclude '**/*Mojo.java'
+    strictCheck = false
+    skipExistingHeaders = false
+    header = rootProject.file('etc/license-header.txt')
+  }
+
+  tasks.withType(AbstractPublishToMaven).configureEach {
+    mustRunAfter tasks.withType(Sign)
+  }
+}
+
+configure(subprojects.findAll {
+  !it.name.endsWith('-bom')
+}) {
+  apply plugin: 'java-library'
+
+  java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    withJavadocJar()
+    withSourcesJar()
+  }
+
+  test {
+    useJUnitPlatform()
+  }
+
+  licenseMain {
+    mustRunAfter generateModule
+  }
+
+  dependencies {
+    compileOnly 'org.febit:febit-annotations-optional'
+    testCompileOnly 'org.febit:febit-annotations-optional'
+
+    testImplementation 'org.febit:febit-commons-test'
+    testRuntimeOnly 'org.slf4j:slf4j-simple'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+  }
+
+  dependencyManagement {
+    resolutionStrategy {
+      cacheChangingModulesFor 0, 'seconds'
+    }
+    imports {
+      mavenBom "${libs.spring.boot.deps.get()}"
+      mavenBom "${libs.febit.commons.deps.get()}"
+    }
+    dependencies {
+      dependency "${libs.embedded.postgres.get()}"
+      dependency "${libs.febit.gradle.common.get()}"
+    }
+  }
+
+}
+
+
+def customPom(MavenPom pom) {
+  pom.with {
+    name.set project.name
+    description.set project.description
+    url = 'https://github.com/febit/febit-boot-devkit'
+    organization {
+      name = 'Febit'
+      url = 'https://github.com/febit'
+    }
+    licenses {
+      license {
+        name = 'Apache License, Version 2.0'
+        url = 'https://github.com/febit/febit-boot-devkit/blob/main/LICENSE.txt'
+        distribution = 'repo'
+      }
+    }
+    scm {
+      url = 'https://github.com/febit/febit-boot-devkit'
+      connection = 'scm:git:https://github.com/febit/febit-boot-devkit.git'
+      developerConnection = 'scm:git:https://github.com/febit/febit-boot-devkit.git'
+    }
+    issueManagement {
+      system = 'GitHub'
+      url = 'https://github.com/febit/febit-boot-devkit/issues'
+    }
+    developers {
+      developer {
+        id = 'kurt'
+        name = 'Kurt Zhu'
+        email = 'zqq@febit.org'
+        timezone = '+8'
+      }
+    }
+  }
+}

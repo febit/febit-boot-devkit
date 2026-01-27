@@ -1,0 +1,34 @@
+[versions]
+hierynomus-license = '0.16.1'
+maven-plugin-development = '1.0.3'
+
+febit-commons = '4.0.0'
+febit-devkit = '1.5.0'
+
+spring-boot = '4.0.2'
+embedded-postgres = '2.2.0'
+
+maven-core = '3.9.12'
+maven-plugin-api = '3.9.12'
+maven-plugin-annotations = '3.15.2'
+
+[libraries]
+febit-commons-deps = { module = 'org.febit:febit-commons-dependencies', version.ref = 'febit-commons' }
+spring-boot-deps = { module = 'org.springframework.boot:spring-boot-dependencies', version.ref = 'spring-boot' }
+
+embedded-postgres = { module = 'io.zonky.test:embedded-postgres', version.ref = 'embedded-postgres' }
+febit-gradle-common = { module = 'org.febit.devkit.gradle:febit-gradle-common', version.ref = 'febit-devkit' }
+
+maven-core = { module = 'org.apache.maven:maven-core', version.ref = 'maven-core' }
+maven-plugin-api = { module = 'org.apache.maven:maven-plugin-api', version.ref = 'maven-plugin-api' }
+maven-plugin-annotations = { module = 'org.apache.maven.plugin-tools:maven-plugin-annotations', version.ref = 'maven-plugin-annotations' }
+
+
+[plugins]
+febit-bom = { id = 'org.febit.standard-bom', version.ref = 'febit-devkit' }
+febit-codegen-module = { id = 'org.febit.codegen-module', version.ref = 'febit-devkit' }
+febit-java = { id = 'org.febit.standard-java', version.ref = 'febit-devkit' }
+febit-maven-publish = { id = 'org.febit.standard-maven-publish', version.ref = 'febit-devkit' }
+
+license = { id = 'com.github.hierynomus.license', version.ref = 'hierynomus-license' }
+maven-plugin-development = { id = 'org.gradlex.maven-plugin-development', version.ref = 'maven-plugin-development' }

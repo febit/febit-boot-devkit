@@ -1,0 +1,26 @@
+pluginManagement {
+  repositories {
+    mavenCentral()
+    gradlePluginPortal()
+  }
+}
+
+rootProject.name = 'febit-boot-devkit-parent'
+
+devkit 'devkit-bom'
+
+devkit 'devkit-rest-client/common'
+devkit 'devkit-rest-client/gradle'
+
+devkit 'devkit-flyway'
+
+devkit 'devkit-jooq/gradle'
+devkit 'devkit-jooq/maven-plugin'
+devkit 'devkit-jooq/meta'
+devkit 'devkit-jooq/runtime'
+
+def devkit(String dir) {
+  def name = ':febit-boot-' + dir.replaceAll("/", "-")
+  include name
+  project(name).projectDir = file(dir)
+}
