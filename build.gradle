@@ -8,7 +8,7 @@ plugins {
   alias libs.plugins.license
 }
 
-version = '4.0.0-SNAPSHOT'
+version = '4.0.0'
 
 group = 'org.febit.boot.devkit'
 description = 'Febit Boot Devkit'
@@ -98,7 +98,6 @@ configure(subprojects.findAll {
   }
 
 }
-
 
 static def customPom(Project project, MavenPom pom) {
   pom.with {
