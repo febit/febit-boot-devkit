@@ -21,6 +21,7 @@ import org.febit.boot.devkit.rest.client.MetaResolver;
 import org.febit.boot.devkit.rest.client.util.ClassNamings;
 import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.DefaultTask;
+import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.classpath.DefaultClassPath;
 import org.jspecify.annotations.NullMarked;
@@ -32,6 +33,7 @@ import static org.febit.boot.devkit.rest.client.gradle.Constants.EXT_NAME;
 
 @Slf4j
 @NullMarked
+@CacheableTask
 public class RestClientCodegenExtensionTask extends DefaultTask {
 
     @Inject

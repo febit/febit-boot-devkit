@@ -8,14 +8,15 @@ plugins {
   alias libs.plugins.license
 }
 
-group = 'org.febit.boot.devkit'
 version = '4.0.0-SNAPSHOT'
+
+group = 'org.febit.boot.devkit'
 description = 'Febit Boot Devkit'
 
 ext {
 }
 
-allprojects {
+allprojects { subproject ->
   apply plugin: 'com.github.hierynomus.license'
 
   group = rootProject.group
@@ -27,7 +28,7 @@ allprojects {
 
   standardMavenPublish {
     pom {
-      customPom(it)
+      customPom(subproject, it)
     }
   }
 
@@ -99,7 +100,7 @@ configure(subprojects.findAll {
 }
 
 
-def customPom(MavenPom pom) {
+static def customPom(Project project, MavenPom pom) {
   pom.with {
     name.set project.name
     description.set project.description
@@ -128,7 +129,7 @@ def customPom(MavenPom pom) {
       developer {
         id = 'kurt'
         name = 'Kurt Zhu'
-        email = 'zqq@febit.org'
+        email = 'kurt@febit.org'
         timezone = '+8'
       }
     }

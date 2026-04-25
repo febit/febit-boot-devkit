@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum DbType {
     POSTGRES(
-            "postgres:18.1-alpine",
+            "postgres:18.3-alpine",
             "postgres",
             "org.postgresql:postgresql",
             "postgresql",
