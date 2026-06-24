@@ -8,7 +8,7 @@ plugins {
   alias libs.plugins.license
 }
 
-version = '4.1.0-SNAPSHOT'
+version = '4.1.0'
 
 group = 'org.febit.boot.devkit'
 description = 'Febit Boot Devkit'
