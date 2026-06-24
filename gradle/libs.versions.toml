@@ -2,10 +2,10 @@
 hierynomus-license = '0.16.1'
 maven-plugin-development = '1.0.3'
 
-febit-commons = '4.0.2'
-febit-devkit = '1.6.1'
+febit-commons = '4.1.0'
+febit-devkit = '1.6.2'
 
-spring-boot = '4.0.6'
+spring-boot = '4.1.0'
 embedded-postgres = '2.2.2'
 
 maven-core = '3.9.12'

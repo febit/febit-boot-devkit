@@ -16,7 +16,7 @@
 package org.febit.boot.devkit.rest.client.util;
 
 import lombok.experimental.UtilityClass;
-import org.febit.lang.util.JacksonUtils;
+import org.febit.lang.jackson.JacksonUtils;
 import org.springframework.core.ResolvableType;
 
 import java.beans.PropertyDescriptor;

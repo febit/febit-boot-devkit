@@ -25,6 +25,7 @@ import org.febit.boot.devkit.jooq.gradle.JooqCodegenPlugin;
 import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.Project;
 import org.jooq.meta.jaxb.Generator;
+import org.jspecify.annotations.Nullable;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -43,7 +44,7 @@ public class ContainerDatabaseJdbcProvider
     private static final String USER = "codegen";
     private static final String PASSWORD = "codegen";
 
-    private final AtomicReference<StartedInstance> startedRef = new AtomicReference<>();
+    private final AtomicReference<@Nullable StartedInstance> startedRef = new AtomicReference<>();
 
     @Getter
     private final ContainerDbConfig conf;
