@@ -26,7 +26,7 @@ import java.io.Serializable;
 @Setter
 public class EmbeddedPostgresConfig implements Serializable {
 
-    public static final String DEFAULT_VERSION = "18.4.0";
+    public static final String DEFAULT_VERSION = "18.6.0";
 
     /**
      * Version of embedded-postgres-binaries-bom.
