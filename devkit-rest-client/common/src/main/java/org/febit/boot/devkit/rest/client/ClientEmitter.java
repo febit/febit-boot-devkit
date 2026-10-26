@@ -15,15 +15,17 @@
  */
 package org.febit.boot.devkit.rest.client;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
+
 import org.febit.boot.devkit.rest.client.meta.ApiDef;
 import org.febit.boot.devkit.rest.client.meta.ApiParameterDef;
 import org.febit.boot.devkit.rest.client.meta.ClientDef;
 import org.febit.boot.devkit.rest.client.util.ClassWriter;
 import org.febit.boot.devkit.rest.client.util.ImportSet;
 import org.febit.devkit.gradle.util.JavaUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -193,22 +195,22 @@ class ClientEmitter {
 
         switch (param.getIn()) {
             case QUERY:
-                out.append("@RequestParam(")
-                        .appendDirectValue(bindName)
-                        .append(") ");
+                out.append("@RequestParam(");
+                emitBindArgs(bindName, param.getRequired());
+                out.append(") ");
                 break;
             case QUERY_MAP:
                 out.append("@RequestParamForm ");
                 break;
             case PATH_VAR:
-                out.append("@PathVariable(")
-                        .appendDirectValue(bindName)
-                        .append(") ");
+                out.append("@PathVariable(");
+                emitBindArgs(bindName, param.getRequired());
+                out.append(") ");
                 break;
             case HEADER:
-                out.append("@RequestHeader(")
-                        .appendDirectValue(bindName)
-                        .append(") ");
+                out.append("@RequestHeader(");
+                emitBindArgs(bindName, param.getRequired());
+                out.append(") ");
                 break;
             case MODEL_ATTR:
                 out.append("@ModelAttribute ");
@@ -222,5 +224,15 @@ class ClientEmitter {
         out.appendType(param.getType())
                 .append(' ')
                 .append(param.getName());
+    }
+
+    private void emitBindArgs(String bindName, Boolean required) {
+        if (Boolean.FALSE.equals(required)) {
+            out.append("value = ")
+                    .appendDirectValue(bindName)
+                    .append(", required = false");
+        } else {
+            out.appendDirectValue(bindName);
+        }
     }
 }

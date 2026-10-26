@@ -15,9 +15,6 @@
  */
 package org.febit.boot.devkit.rest.client.meta;
 
-import lombok.Builder;
-import lombok.Data;
-import org.febit.devkit.gradle.util.JavaUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.ResolvableType;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -27,16 +24,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.febit.devkit.gradle.util.JavaUtils;
+
+import lombok.Builder;
+import lombok.Data;
+
 import java.lang.reflect.Parameter;
 
 @Data
-@Builder(builderClassName = "Builder")
+@Builder
 public class ApiParameterDef {
 
     private final String name;
     private final ResolvableType type;
     private final In in;
     private final String bindName;
+    private final Boolean required;
     private final Boolean isDeprecated;
 
     public static ApiParameterDef of(Parameter param) {
@@ -47,6 +50,7 @@ public class ApiParameterDef {
         var builder = ApiParameterDef.builder()
                 .type(type)
                 .name(param.getName())
+                .required(Boolean.TRUE)
                 .isDeprecated(JavaUtils.isDeprecated(param));
 
         var bodyAnno = AnnotatedElementUtils.findMergedAnnotation(param, RequestBody.class);
@@ -57,13 +61,16 @@ public class ApiParameterDef {
 
         if (pathVarAnno != null) {
             builder.in(In.PATH_VAR)
-                    .bindName(pathVarAnno.name());
+                    .bindName(pathVarAnno.name())
+                    .required(pathVarAnno.required());
         } else if (headerAnno != null) {
             builder.in(In.HEADER)
-                    .bindName(headerAnno.name());
+                    .bindName(headerAnno.name())
+                    .required(headerAnno.required());
         } else if (queryAnno != null) {
             builder.in(In.QUERY)
-                    .bindName(queryAnno.name());
+                    .bindName(queryAnno.name())
+                    .required(queryAnno.required());
         } else if (modelAttrAnno != null) {
             builder.in(In.MODEL_ATTR);
         } else if (bodyAnno != null) {
