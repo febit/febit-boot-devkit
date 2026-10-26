@@ -15,10 +15,11 @@
  */
 package org.febit.boot.devkit.jooq.runtime.util;
 
-import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.TableDefinition;
+
+import lombok.experimental.UtilityClass;
 
 import java.util.function.Predicate;
 

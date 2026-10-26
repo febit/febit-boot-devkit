@@ -15,15 +15,17 @@
  */
 package org.febit.boot.devkit.flyway.gradle;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Strings;
-import org.febit.boot.devkit.flyway.gradle.model.FlywayOptionImpl;
-import org.febit.boot.devkit.flyway.gradle.model.JdbcOptionImpl;
-import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.jetbrains.annotations.Nullable;
+
+import org.febit.boot.devkit.flyway.gradle.model.FlywayOptionImpl;
+import org.febit.boot.devkit.flyway.gradle.model.JdbcOptionImpl;
+import org.febit.devkit.gradle.util.GradleUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.Serializable;

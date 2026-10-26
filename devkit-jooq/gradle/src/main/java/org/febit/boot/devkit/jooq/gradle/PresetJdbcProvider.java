@@ -15,9 +15,10 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
+import org.jooq.meta.jaxb.Jdbc;
+
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOptionImpl;
-import org.jooq.meta.jaxb.Jdbc;
 
 public record PresetJdbcProvider(
         Jdbc jdbc

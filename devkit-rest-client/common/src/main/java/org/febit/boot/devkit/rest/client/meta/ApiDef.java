@@ -15,10 +15,11 @@
  */
 package org.febit.boot.devkit.rest.client.meta;
 
+import org.springframework.core.ResolvableType;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
-import org.springframework.core.ResolvableType;
 
 import java.util.List;
 

@@ -15,19 +15,21 @@
  */
 package org.febit.boot.devkit.rest.client.gradle;
 
-import lombok.extern.slf4j.Slf4j;
-import org.febit.boot.devkit.rest.client.ClientCodegen;
-import org.febit.boot.devkit.rest.client.MetaResolver;
-import org.febit.boot.devkit.rest.client.util.ClassNamings;
-import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.classpath.DefaultClassPath;
+
+import org.febit.boot.devkit.rest.client.ClientCodegen;
+import org.febit.boot.devkit.rest.client.MetaResolver;
+import org.febit.boot.devkit.rest.client.util.ClassNamings;
+import org.febit.devkit.gradle.util.GradleUtils;
+
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
 
-import javax.inject.Inject;
 import java.net.URLClassLoader;
+import javax.inject.Inject;
 
 import static org.febit.boot.devkit.rest.client.gradle.Constants.EXT_NAME;
 

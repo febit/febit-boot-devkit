@@ -15,10 +15,6 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
-import org.febit.boot.devkit.jooq.meta.JooqCodegen;
-import org.febit.boot.devkit.jooq.meta.MetaUtils;
-import org.febit.devkit.gradle.util.FolderUtils;
-import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.DuplicatesStrategy;
@@ -26,6 +22,11 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
+
+import org.febit.boot.devkit.jooq.meta.JooqCodegen;
+import org.febit.boot.devkit.jooq.meta.MetaUtils;
+import org.febit.devkit.gradle.util.FolderUtils;
+import org.febit.devkit.gradle.util.GradleUtils;
 
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;

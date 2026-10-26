@@ -15,7 +15,9 @@
  */
 package org.febit.boot.devkit.jooq.gradle.container;
 
-import lombok.Getter;
+import org.gradle.api.Project;
+import org.jooq.meta.jaxb.Generator;
+
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOptionImpl;
 import org.febit.boot.devkit.jooq.gradle.ContainerDbConfig;
@@ -23,16 +25,16 @@ import org.febit.boot.devkit.jooq.gradle.JdbcProvider;
 import org.febit.boot.devkit.jooq.gradle.JooqCodegenExtension;
 import org.febit.boot.devkit.jooq.gradle.JooqCodegenPlugin;
 import org.febit.devkit.gradle.util.GradleUtils;
-import org.gradle.api.Project;
-import org.jooq.meta.jaxb.Generator;
+
+import lombok.Getter;
 import org.jspecify.annotations.Nullable;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.inject.Inject;
 
 @lombok.Builder(
         builderClassName = "Builder"

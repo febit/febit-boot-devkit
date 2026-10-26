@@ -15,9 +15,10 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
+import org.febit.boot.devkit.jooq.gradle.container.DbType;
+
 import lombok.Getter;
 import lombok.Setter;
-import org.febit.boot.devkit.jooq.gradle.container.DbType;
 import org.jspecify.annotations.Nullable;
 
 import java.io.File;

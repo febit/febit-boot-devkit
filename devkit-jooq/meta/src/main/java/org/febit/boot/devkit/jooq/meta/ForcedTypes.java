@@ -15,9 +15,11 @@
  */
 package org.febit.boot.devkit.jooq.meta;
 
-import lombok.experimental.UtilityClass;
-import org.febit.lang.modeler.Schema;
 import org.jooq.meta.jaxb.ForcedType;
+
+import org.febit.lang.modeler.Schema;
+
+import lombok.experimental.UtilityClass;
 import org.jspecify.annotations.Nullable;
 
 import java.time.Instant;

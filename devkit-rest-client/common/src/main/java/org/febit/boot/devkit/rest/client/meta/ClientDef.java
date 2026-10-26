@@ -22,7 +22,7 @@ import lombok.Singular;
 import java.util.List;
 
 @Data
-@Builder(builderClassName = "Builder")
+@Builder
 public class ClientDef {
     private final String name;
     private final Class<?> type;

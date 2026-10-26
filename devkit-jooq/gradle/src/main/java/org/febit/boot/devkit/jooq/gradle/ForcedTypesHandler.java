@@ -17,13 +17,14 @@ package org.febit.boot.devkit.jooq.gradle;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
-import org.febit.boot.devkit.jooq.meta.ForcedTypes;
-import org.febit.devkit.gradle.util.GradleUtils;
-import org.febit.lang.modeler.Schema;
 import org.gradle.api.internal.CollectionCallbackActionDecorator;
 import org.gradle.api.internal.DefaultNamedDomainObjectList;
 import org.gradle.internal.reflect.DirectInstantiator;
 import org.jooq.meta.jaxb.ForcedType;
+
+import org.febit.boot.devkit.jooq.meta.ForcedTypes;
+import org.febit.devkit.gradle.util.GradleUtils;
+import org.febit.lang.modeler.Schema;
 
 import java.util.Map;
 

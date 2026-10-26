@@ -15,8 +15,9 @@
  */
 package org.febit.boot.devkit.jooq.runtime.util;
 
-import lombok.experimental.UtilityClass;
 import org.jooq.tools.StringUtils;
+
+import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class NamingUtils {

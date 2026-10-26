@@ -11,9 +11,9 @@ check:
 clean:
 	./gradlew clean
 
-.PHONY: licenseFormat
-licenseFormat:
-	./gradlew licenseFormat
+.PHONY: format
+format:
+	./gradlew spotlessApply
 
 .PHONY: build
 build:

@@ -15,10 +15,11 @@
  */
 package org.febit.boot.devkit.jooq.runtime.spi;
 
-import org.febit.boot.devkit.jooq.runtime.JooqGeneratorStrategy;
 import org.jooq.codegen.GeneratorStrategy;
 import org.jooq.meta.Definition;
 import org.jooq.meta.TableDefinition;
+
+import org.febit.boot.devkit.jooq.runtime.JooqGeneratorStrategy;
 
 public interface SpiContext {
 

@@ -15,17 +15,19 @@
  */
 package org.febit.boot.devkit.rest.client;
 
-import lombok.Builder;
-import lombok.Singular;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.core.ResolvableType;
+
 import org.febit.boot.devkit.rest.client.meta.ClientDef;
 import org.febit.boot.devkit.rest.client.util.ClassNaming;
 import org.febit.boot.devkit.rest.client.util.ClassWriter;
 import org.febit.boot.devkit.rest.client.util.CodeUtils;
 import org.febit.devkit.gradle.util.JavaUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.core.ResolvableType;
+
+import lombok.Builder;
+import lombok.Singular;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.util.HashSet;
@@ -35,7 +37,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 @Slf4j
-@Builder(builderClassName = "Builder")
+@Builder
 public class ClientCodegen {
 
     final String clientBasePackage;

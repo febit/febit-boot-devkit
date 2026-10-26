@@ -15,16 +15,9 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
-import org.febit.boot.devkit.jooq.gradle.container.ContainerDatabaseJdbcProvider;
-import org.febit.devkit.gradle.util.GradleUtils;
-import org.febit.lang.util.ArraysUtils;
 import org.gradle.api.JavaVersion;
 import org.gradle.api.internal.TaskInternal;
 import org.gradle.api.internal.project.ProjectInternal;
@@ -33,6 +26,15 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.testfixtures.ProjectBuilder;
 import org.jooq.meta.jaxb.Jdbc;
+
+import org.febit.boot.devkit.jooq.gradle.container.ContainerDatabaseJdbcProvider;
+import org.febit.devkit.gradle.util.GradleUtils;
+import org.febit.lang.util.ArraysUtils;
+
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.File;
 import java.io.IOException;

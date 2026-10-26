@@ -15,10 +15,11 @@
  */
 package org.febit.boot.devkit.jooq.meta.embedded;
 
+import org.apache.commons.lang3.SystemUtils;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.SystemUtils;
 
 import static org.apache.commons.lang3.StringUtils.lowerCase;
 

@@ -15,10 +15,11 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
-import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
-import org.febit.lang.util.TypeParameters;
 import org.gradle.api.Project;
 import org.gradle.api.model.ObjectFactory;
+
+import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
+import org.febit.lang.util.TypeParameters;
 
 import java.io.Serializable;
 import java.util.Objects;

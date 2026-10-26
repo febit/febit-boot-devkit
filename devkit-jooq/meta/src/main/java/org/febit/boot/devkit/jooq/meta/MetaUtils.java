@@ -15,7 +15,6 @@
  */
 package org.febit.boot.devkit.jooq.meta;
 
-import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FileUtils;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.Database;
@@ -24,6 +23,8 @@ import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Strategy;
 import org.jooq.meta.jaxb.Target;
 import org.jooq.util.jaxb.tools.MiniJAXB;
+
+import lombok.experimental.UtilityClass;
 
 import java.io.File;
 import java.io.IOException;

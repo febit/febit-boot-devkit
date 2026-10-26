@@ -15,8 +15,9 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
-import org.febit.boot.devkit.jooq.gradle.container.DbType;
 import org.junit.jupiter.api.Test;
+
+import org.febit.boot.devkit.jooq.gradle.container.DbType;
 
 import java.io.IOException;
 import java.util.Map;

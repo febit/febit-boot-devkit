@@ -1,11 +1,10 @@
 [versions]
-hierynomus-license = '0.16.1'
 maven-plugin-development = '1.0.3'
 
 febit-commons = '4.1.1'
-febit-devkit = '1.6.2'
+febit-devkit = '1.7.0'
 
-spring-boot = '4.1.1'
+spring-boot = '4.1.2'
 embedded-postgres = '2.2.2'
 
 maven-core = '3.9.12'
@@ -30,5 +29,4 @@ febit-codegen-module = { id = 'org.febit.codegen-module', version.ref = 'febit-d
 febit-java = { id = 'org.febit.standard-java', version.ref = 'febit-devkit' }
 febit-maven-publish = { id = 'org.febit.standard-maven-publish', version.ref = 'febit-devkit' }
 
-license = { id = 'com.github.hierynomus.license', version.ref = 'hierynomus-license' }
 maven-plugin-development = { id = 'org.gradlex.maven-plugin-development', version.ref = 'maven-plugin-development' }

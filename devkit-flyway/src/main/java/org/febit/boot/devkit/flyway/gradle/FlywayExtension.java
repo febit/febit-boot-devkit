@@ -15,12 +15,13 @@
  */
 package org.febit.boot.devkit.flyway.gradle;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.gradle.api.Project;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.provider.ListProperty;
+
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.regex.Pattern;

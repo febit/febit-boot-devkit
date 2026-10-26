@@ -15,10 +15,6 @@
  */
 package org.febit.boot.devkit.jooq.runtime;
 
-import org.febit.boot.devkit.jooq.meta.MetaUtils;
-import org.febit.boot.devkit.jooq.runtime.spi.ClassAnnotationsResolver;
-import org.febit.boot.devkit.jooq.runtime.spi.TableFilter;
-import org.febit.lang.jackson.JacksonUtils;
 import org.jooq.codegen.FebitDevkitJavaGeneratorHack;
 import org.jooq.codegen.GeneratorStrategy;
 import org.jooq.codegen.JavaWriter;
@@ -27,6 +23,11 @@ import org.jooq.meta.Database;
 import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.TableDefinition;
+
+import org.febit.boot.devkit.jooq.meta.MetaUtils;
+import org.febit.boot.devkit.jooq.runtime.spi.ClassAnnotationsResolver;
+import org.febit.boot.devkit.jooq.runtime.spi.TableFilter;
+import org.febit.lang.jackson.JacksonUtils;
 
 import java.util.Arrays;
 import java.util.List;

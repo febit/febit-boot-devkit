@@ -17,18 +17,20 @@ package org.febit.boot.devkit.rest.client.gradle;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
-import lombok.Getter;
-import lombok.Setter;
-import org.febit.boot.devkit.rest.client.util.ClassNamingImpl;
-import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.Project;
 
-import javax.inject.Inject;
+import org.febit.boot.devkit.rest.client.util.ClassNamingImpl;
+import org.febit.devkit.gradle.util.GradleUtils;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.inject.Inject;
 
 public class RestClientCodegenExtension {
 

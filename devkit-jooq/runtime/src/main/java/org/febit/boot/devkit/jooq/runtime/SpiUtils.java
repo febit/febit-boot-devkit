@@ -15,11 +15,13 @@
  */
 package org.febit.boot.devkit.jooq.runtime;
 
-import lombok.experimental.UtilityClass;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+
 import org.febit.boot.devkit.jooq.runtime.spi.Aware;
 import org.febit.lang.util.Lists;
-import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+
+import lombok.experimental.UtilityClass;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.ServiceLoader;

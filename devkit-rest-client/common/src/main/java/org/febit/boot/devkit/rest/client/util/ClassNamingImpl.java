@@ -17,6 +17,7 @@ package org.febit.boot.devkit.rest.client.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
+
 import org.febit.devkit.gradle.util.JavaUtils;
 import org.febit.lang.Tuple2;
 

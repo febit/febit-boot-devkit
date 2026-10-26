@@ -15,12 +15,13 @@
  */
 package org.febit.boot.devkit.rest.client.gradle;
 
-import org.febit.devkit.gradle.util.FolderUtils;
-import org.febit.devkit.gradle.util.GradleUtils;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+
+import org.febit.devkit.gradle.util.FolderUtils;
+import org.febit.devkit.gradle.util.GradleUtils;
 
 public class RestClientCodegenPlugin implements Plugin<Project> {
 

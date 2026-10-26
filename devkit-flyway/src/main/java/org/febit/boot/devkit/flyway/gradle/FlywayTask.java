@@ -15,11 +15,6 @@
  */
 package org.febit.boot.devkit.flyway.gradle;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import org.febit.boot.devkit.flyway.gradle.model.FlywayOption;
-import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
 import org.flywaydb.core.api.FlywayException;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.FileCollection;
@@ -30,6 +25,13 @@ import org.gradle.api.tasks.Classpath;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
+
+import org.febit.boot.devkit.flyway.gradle.model.FlywayOption;
+import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.inject.Inject;
 

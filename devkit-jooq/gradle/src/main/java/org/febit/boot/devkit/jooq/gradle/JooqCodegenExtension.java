@@ -17,11 +17,6 @@ package org.febit.boot.devkit.jooq.gradle;
 
 import groovy.lang.Closure;
 import groovy.lang.DelegatesTo;
-import lombok.Getter;
-import org.febit.boot.devkit.jooq.gradle.container.ContainerDatabaseJdbcProvider;
-import org.febit.boot.devkit.jooq.gradle.embedded.EmbeddedPostgresJdbcProvider;
-import org.febit.boot.devkit.jooq.meta.MetaUtils;
-import org.febit.devkit.gradle.util.GradleUtils;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.gradle.api.Project;
 import org.gradle.api.file.DirectoryProperty;
@@ -34,9 +29,16 @@ import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Jdbc;
 import org.jooq.meta.jaxb.SchemaMappingType;
 
-import javax.inject.Inject;
+import org.febit.boot.devkit.jooq.gradle.container.ContainerDatabaseJdbcProvider;
+import org.febit.boot.devkit.jooq.gradle.embedded.EmbeddedPostgresJdbcProvider;
+import org.febit.boot.devkit.jooq.meta.MetaUtils;
+import org.febit.devkit.gradle.util.GradleUtils;
+
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 public class JooqCodegenExtension {
 

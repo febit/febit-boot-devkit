@@ -15,11 +15,13 @@
  */
 package org.febit.boot.devkit.rest.client.util;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.ResolvableType;
+
 import org.febit.devkit.gradle.util.JavaUtils;
 import org.febit.lang.util.Lists;
-import org.springframework.core.ResolvableType;
+
+import lombok.RequiredArgsConstructor;
 
 import java.util.HashSet;
 import java.util.List;

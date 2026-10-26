@@ -15,10 +15,12 @@
  */
 package org.febit.boot.devkit.jooq.runtime.spi.lib;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.Strings;
-import org.febit.boot.devkit.jooq.runtime.spi.TableFilter;
 import org.jooq.meta.TableDefinition;
+
+import org.febit.boot.devkit.jooq.runtime.spi.TableFilter;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class FlywayExcludeFilter implements TableFilter {

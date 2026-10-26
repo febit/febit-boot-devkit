@@ -15,19 +15,21 @@
  */
 package org.febit.boot.devkit.jooq.runtime;
 
-import lombok.extern.slf4j.Slf4j;
-import org.febit.boot.devkit.jooq.runtime.spi.ClassNameDecorator;
-import org.febit.boot.devkit.jooq.runtime.spi.ImplementsResolver;
-import org.febit.boot.devkit.jooq.runtime.spi.Naming;
-import org.febit.boot.devkit.jooq.runtime.spi.OutputNameResolver;
-import org.febit.boot.devkit.jooq.runtime.util.ColumnUtils;
-import org.febit.boot.devkit.jooq.runtime.util.NamingUtils;
 import org.jooq.codegen.DefaultGeneratorStrategy;
 import org.jooq.meta.CatalogDefinition;
 import org.jooq.meta.ColumnDefinition;
 import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.meta.TableDefinition;
+
+import org.febit.boot.devkit.jooq.runtime.spi.ClassNameDecorator;
+import org.febit.boot.devkit.jooq.runtime.spi.ImplementsResolver;
+import org.febit.boot.devkit.jooq.runtime.spi.Naming;
+import org.febit.boot.devkit.jooq.runtime.spi.OutputNameResolver;
+import org.febit.boot.devkit.jooq.runtime.util.ColumnUtils;
+import org.febit.boot.devkit.jooq.runtime.util.NamingUtils;
+
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;

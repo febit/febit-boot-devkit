@@ -15,10 +15,11 @@
  */
 package org.febit.boot.devkit.jooq.runtime.spi.lib;
 
-import org.febit.boot.devkit.jooq.runtime.spi.ImplementsResolver;
-import org.febit.boot.devkit.jooq.runtime.util.ColumnUtils;
 import org.jooq.codegen.GeneratorStrategy;
 import org.jooq.meta.TableDefinition;
+
+import org.febit.boot.devkit.jooq.runtime.spi.ImplementsResolver;
+import org.febit.boot.devkit.jooq.runtime.util.ColumnUtils;
 
 public class BootImplsResolver implements ImplementsResolver {
 

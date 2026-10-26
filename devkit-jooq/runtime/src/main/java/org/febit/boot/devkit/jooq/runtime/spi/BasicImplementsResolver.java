@@ -15,12 +15,13 @@
  */
 package org.febit.boot.devkit.jooq.runtime.spi;
 
-import org.febit.boot.devkit.jooq.meta.MetaUtils;
-import org.febit.boot.devkit.jooq.runtime.JooqGeneratorStrategy;
 import org.jooq.codegen.GeneratorStrategy;
 import org.jooq.meta.TableDefinition;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+
+import org.febit.boot.devkit.jooq.meta.MetaUtils;
+import org.febit.boot.devkit.jooq.runtime.JooqGeneratorStrategy;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class BasicImplementsResolver implements ImplementsResolver {

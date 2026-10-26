@@ -19,12 +19,11 @@ import io.zonky.test.db.postgres.embedded.EmbeddedPostgres;
 import io.zonky.test.db.postgres.embedded.PgBinaryResolver;
 import io.zonky.test.db.postgres.util.ArchUtils;
 import io.zonky.test.db.postgres.util.LinuxUtils;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.gradle.api.Project;
+
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOptionImpl;
 import org.febit.boot.devkit.jooq.gradle.EmbeddedPostgresConfig;
@@ -35,19 +34,23 @@ import org.febit.boot.devkit.jooq.meta.JooqCodegen;
 import org.febit.boot.devkit.jooq.meta.embedded.PackageUtils;
 import org.febit.devkit.gradle.util.GradleUtils;
 import org.febit.lang.util.Lists;
-import org.gradle.api.Project;
+
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.inject.Inject;
+
+import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 import static java.lang.String.format;
-import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 @Slf4j
 @lombok.Builder(

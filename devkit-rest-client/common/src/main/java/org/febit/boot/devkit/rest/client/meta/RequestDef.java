@@ -15,16 +15,18 @@
  */
 package org.febit.boot.devkit.rest.client.meta;
 
-import lombok.Builder;
-import lombok.Data;
-import org.febit.lang.util.Lists;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.febit.lang.util.Lists;
+
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.List;
 
 @Data
-@Builder(builderClassName = "Builder")
+@Builder
 public class RequestDef {
 
     private final List<String> paths;

@@ -16,6 +16,7 @@
 package org.jooq.codegen;
 
 import org.jooq.meta.Database;
+
 import org.jspecify.annotations.NullMarked;
 
 @NullMarked

@@ -18,9 +18,10 @@ package org.febit.boot.devkit.jooq.runtime.spi;
 import org.jooq.codegen.GeneratorStrategy;
 import org.jooq.meta.Definition;
 import org.jooq.meta.TableDefinition;
-import org.jspecify.annotations.Nullable;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+
+import org.jspecify.annotations.Nullable;
 
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class DefaultPackageNaming implements Naming {

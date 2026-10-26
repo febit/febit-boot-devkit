@@ -15,14 +15,16 @@
  */
 package org.febit.boot.devkit.flyway.gradle;
 
-import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
-import org.febit.lang.util.ArraysUtils;
-import org.febit.lang.util.Lists;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+
+import org.febit.lang.util.ArraysUtils;
+import org.febit.lang.util.Lists;
+
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

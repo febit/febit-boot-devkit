@@ -15,11 +15,12 @@
  */
 package org.febit.boot.devkit.flyway.gradle.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 

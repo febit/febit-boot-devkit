@@ -15,22 +15,24 @@
  */
 package org.febit.boot.devkit.jooq.maven;
 
-import lombok.Data;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-import org.febit.boot.devkit.jooq.meta.ForcedTypes;
-import org.febit.boot.devkit.jooq.meta.MetaUtils;
-import org.febit.lang.modeler.Schema;
-import org.febit.lang.util.ArraysUtils;
 import org.jooq.codegen.GenerationTool;
 import org.jooq.meta.jaxb.Configuration;
 import org.jooq.meta.jaxb.ForcedType;
 import org.jooq.meta.jaxb.Generate;
 import org.jooq.meta.jaxb.Generator;
 import org.jooq.meta.jaxb.Jdbc;
+
+import org.febit.boot.devkit.jooq.meta.ForcedTypes;
+import org.febit.boot.devkit.jooq.meta.MetaUtils;
+import org.febit.lang.modeler.Schema;
+import org.febit.lang.util.ArraysUtils;
+
+import lombok.Data;
 
 import java.io.File;
 import java.io.UncheckedIOException;

@@ -15,13 +15,7 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.febit.boot.devkit.flyway.gradle.FlywayAction;
-import org.febit.boot.devkit.flyway.gradle.FlywayExecutor;
-import org.febit.boot.devkit.flyway.gradle.model.FlywayOptionImpl;
-import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
-import org.febit.boot.devkit.jooq.meta.MetaUtils;
 import org.flywaydb.core.api.FlywayException;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.DirectoryProperty;
@@ -44,9 +38,17 @@ import org.gradle.process.ExecOperations;
 import org.gradle.process.JavaExecSpec;
 import org.jooq.meta.jaxb.Configuration;
 
-import javax.inject.Inject;
+import org.febit.boot.devkit.flyway.gradle.FlywayAction;
+import org.febit.boot.devkit.flyway.gradle.FlywayExecutor;
+import org.febit.boot.devkit.flyway.gradle.model.FlywayOptionImpl;
+import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
+import org.febit.boot.devkit.jooq.meta.MetaUtils;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.util.List;
+import javax.inject.Inject;
 
 @Slf4j
 @CacheableTask

@@ -15,9 +15,10 @@
  */
 package org.febit.boot.devkit.jooq.gradle;
 
-import lombok.RequiredArgsConstructor;
 import org.febit.boot.devkit.flyway.gradle.model.JdbcOption;
 import org.febit.lang.UncheckedException;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(staticName = "create")
 public class JdbcConnectionImpl implements JdbcConnection {
