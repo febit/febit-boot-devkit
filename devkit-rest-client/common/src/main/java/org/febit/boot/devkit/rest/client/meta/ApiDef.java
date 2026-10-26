@@ -17,22 +17,22 @@ package org.febit.boot.devkit.rest.client.meta;
 
 import org.springframework.core.ResolvableType;
 
-import lombok.Builder;
-import lombok.Data;
+import org.febit.boot.devkit.rest.client.util.Immutables;
+
 import lombok.Singular;
 
 import java.util.List;
 
-@Data
-@Builder
-public class ApiDef {
+@lombok.Builder(builderClassName = "Builder")
+public record ApiDef(
+        String name,
+        Boolean deprecated,
+        RequestDef request,
+        ResolvableType returnType,
+        @Singular List<ApiParameterDef> parameters
+) {
 
-    private final String name;
-    private final boolean deprecated;
-    private final RequestDef request;
-
-    private final ResolvableType returnType;
-
-    @Singular
-    private final List<ApiParameterDef> parameters;
+    public ApiDef {
+        parameters = Immutables.copyOf(parameters);
+    }
 }

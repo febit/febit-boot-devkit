@@ -174,7 +174,7 @@ public class MetaResolver {
 
     private boolean isParameterInclude(ApiParameterDef parameter) {
         return !excludeParamTypes.contains(
-                parameter.getType().resolve(Object.class).getName()
+                parameter.type().resolve(Object.class).getName()
         );
     }
 

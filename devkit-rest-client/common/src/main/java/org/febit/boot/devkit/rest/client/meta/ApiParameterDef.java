@@ -26,21 +26,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.febit.devkit.gradle.util.JavaUtils;
 
-import lombok.Builder;
-import lombok.Data;
-
 import java.lang.reflect.Parameter;
 
-@Data
-@Builder
-public class ApiParameterDef {
-
-    private final String name;
-    private final ResolvableType type;
-    private final In in;
-    private final String bindName;
-    private final Boolean required;
-    private final Boolean isDeprecated;
+@lombok.Builder(builderClassName = "Builder")
+public record ApiParameterDef(
+        String name,
+        ResolvableType type,
+        In in,
+        String bindName,
+        Boolean required,
+        Boolean deprecated
+) {
 
     public static ApiParameterDef of(Parameter param) {
         var type = ResolvableType.forMethodParameter(
@@ -51,7 +47,7 @@ public class ApiParameterDef {
                 .type(type)
                 .name(param.getName())
                 .required(Boolean.TRUE)
-                .isDeprecated(JavaUtils.isDeprecated(param));
+                .deprecated(JavaUtils.isDeprecated(param));
 
         var bodyAnno = AnnotatedElementUtils.findMergedAnnotation(param, RequestBody.class);
         var pathVarAnno = AnnotatedElementUtils.findMergedAnnotation(param, PathVariable.class);

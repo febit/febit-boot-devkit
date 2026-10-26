@@ -15,21 +15,22 @@
  */
 package org.febit.boot.devkit.rest.client.meta;
 
-import lombok.Builder;
-import lombok.Data;
+import org.febit.boot.devkit.rest.client.util.Immutables;
+
 import lombok.Singular;
 
 import java.util.List;
 
-@Data
-@Builder
-public class ClientDef {
-    private final String name;
-    private final Class<?> type;
-    private final boolean deprecated;
+@lombok.Builder(builderClassName = "Builder")
+public record ClientDef(
+        String name,
+        Class<?> type,
+        Boolean deprecated,
+        RequestDef request,
+        @Singular("api") List<ApiDef> apis
+) {
 
-    private final RequestDef request;
-
-    @Singular("api")
-    private final List<ApiDef> apis;
+    public ClientDef {
+        apis = Immutables.copyOf(apis);
+    }
 }

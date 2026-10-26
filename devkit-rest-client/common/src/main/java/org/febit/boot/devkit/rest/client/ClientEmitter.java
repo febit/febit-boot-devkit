@@ -52,13 +52,13 @@ class ClientEmitter {
         this.codegen = codegen;
         this.client = client;
 
-        var fullName = codegen.clientNaming.resolve(client.getType().getCanonicalName());
+        var fullName = codegen.clientNaming.resolve(client.type().getCanonicalName());
         this.out = ClassWriter.create(codegen.pojoNaming, fullName);
         this.imports = this.out.getImports();
 
         DEFAULT_IMPORTS.forEach(this.imports::add);
 
-        var path = client.getRequest().getPrimaryPath();
+        var path = client.request().getPrimaryPath();
         // NOTE: Path-Variables are not support in client-level settings.
         this.clientPath = StringUtils.substringBefore(path, "/{");
         this.apiPathPrefix = Strings.CS.removeEnd(
@@ -71,33 +71,33 @@ class ClientEmitter {
         log.info("Emit client: {}", this.out.getFullName());
 
         // Imports
-        client.getApis().forEach(api -> {
-            imports.add(api.getReturnType());
-            api.getParameters()
+        client.apis().forEach(api -> {
+            imports.add(api.returnType());
+            api.parameters()
                     .stream()
-                    .map(ApiParameterDef::getType)
+                    .map(ApiParameterDef::type)
                     .forEach(imports::add);
         });
 
         // Emit POJOs
-        client.getApis().forEach(api -> {
-            codegen.emitPojoIfAbsent(api.getReturnType());
-            api.getParameters()
+        client.apis().forEach(api -> {
+            codegen.emitPojoIfAbsent(api.returnType());
+            api.parameters()
                     .stream()
-                    .map(ApiParameterDef::getType)
+                    .map(ApiParameterDef::type)
                     .forEach(codegen::emitPojoIfAbsent);
         });
 
         out.appendClassHeader();
 
-        if (client.isDeprecated()) {
+        if (client.deprecated()) {
             out.append("@Deprecated\n");
         }
 
         emitClientConfigs();
         out.appendDeclare("interface");
 
-        client.getApis()
+        client.apis()
                 .forEach(this::emitApi);
 
         out.closeAndSinkTo(codegen.targetDir);
@@ -114,19 +114,19 @@ class ClientEmitter {
     private void emitApi(ApiDef api) {
         out.append('\n');
 
-        if (api.isDeprecated()) {
+        if (api.deprecated()) {
             out.tab(1).append("@Deprecated\n");
         }
 
         emitApiRequestMapping(api);
 
         out.tab(1).append("")
-                .appendType(api.getReturnType())
+                .appendType(api.returnType())
                 .append(" ")
-                .append(api.getName())
+                .append(api.name())
                 .append('(');
 
-        var params = api.getParameters();
+        var params = api.parameters();
         if (!params.isEmpty()) {
             out.append('\n');
             out.foreach(params, ",\n", "\n", this::emitApiParameter);
@@ -137,7 +137,7 @@ class ClientEmitter {
     }
 
     private void emitApiRequestMapping(ApiDef api) {
-        var req = api.getRequest();
+        var req = api.request();
 
         out.tab(1).append("");
         var method = req.method();
@@ -153,24 +153,24 @@ class ClientEmitter {
         out.tab(2).append("url = ")
                 .appendDirectValue(this.apiPathPrefix + path);
 
-        if (!req.getHeaders().isEmpty()) {
+        if (!req.headers().isEmpty()) {
             out.append(",\n");
             out.tab(2).append("headers = {\n");
-            out.foreach(req.getHeaders(), ",\n", "\n", str ->
+            out.foreach(req.headers(), ",\n", "\n", str ->
                     out.tab(3).appendDirectValue(str)
             );
             out.tab(2).append("}");
         }
 
-        if (!req.getConsumes().isEmpty()) {
+        if (!req.consumes().isEmpty()) {
             out.append(",\n");
-            out.tab(2).append("contentType = ").appendDirectValue(req.getConsumes().get(0));
+            out.tab(2).append("contentType = ").appendDirectValue(req.consumes().get(0));
         }
 
-        if (!req.getProduces().isEmpty()) {
+        if (!req.produces().isEmpty()) {
             out.append(",\n");
             out.tab(2).append("accept = {\n");
-            out.foreach(req.getProduces(), ",\n", "\n", str ->
+            out.foreach(req.produces(), ",\n", "\n", str ->
                     out.tab(3).appendDirectValue(str)
             );
             out.tab(2).append("}");
@@ -185,18 +185,18 @@ class ClientEmitter {
     private void emitApiParameter(ApiParameterDef param) {
         out.tab(3);
 
-        var bindName = StringUtils.isNotEmpty(param.getBindName())
-                ? param.getBindName()
-                : param.getName();
+        var bindName = StringUtils.isNotEmpty(param.bindName())
+                ? param.bindName()
+                : param.name();
 
-        if (param.getIsDeprecated()) {
+        if (param.deprecated()) {
             out.append("@Deprecated ");
         }
 
-        switch (param.getIn()) {
+        switch (param.in()) {
             case QUERY:
                 out.append("@RequestParam(");
-                emitBindArgs(bindName, param.getRequired());
+                emitBindArgs(bindName, param.required());
                 out.append(") ");
                 break;
             case QUERY_MAP:
@@ -204,12 +204,12 @@ class ClientEmitter {
                 break;
             case PATH_VAR:
                 out.append("@PathVariable(");
-                emitBindArgs(bindName, param.getRequired());
+                emitBindArgs(bindName, param.required());
                 out.append(") ");
                 break;
             case HEADER:
                 out.append("@RequestHeader(");
-                emitBindArgs(bindName, param.getRequired());
+                emitBindArgs(bindName, param.required());
                 out.append(") ");
                 break;
             case MODEL_ATTR:
@@ -219,11 +219,11 @@ class ClientEmitter {
                 out.append("@RequestBody ");
                 break;
             default:
-                throw new IllegalArgumentException("Unsupported Parameter.In: " + param.getIn());
+                throw new IllegalArgumentException("Unsupported Parameter.In: " + param.in());
         }
-        out.appendType(param.getType())
+        out.appendType(param.type())
                 .append(' ')
-                .append(param.getName());
+                .append(param.name());
     }
 
     private void emitBindArgs(String bindName, Boolean required) {

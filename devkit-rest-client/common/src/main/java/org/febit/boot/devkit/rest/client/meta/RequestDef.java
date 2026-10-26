@@ -18,25 +18,26 @@ package org.febit.boot.devkit.rest.client.meta;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import org.febit.boot.devkit.rest.client.util.Immutables;
 import org.febit.lang.util.Lists;
-
-import lombok.Builder;
-import lombok.Data;
 
 import java.util.List;
 
-@Data
-@Builder
-public class RequestDef {
+@lombok.Builder(builderClassName = "Builder")
+public record RequestDef(
+        List<String> paths,
+        List<RequestMethod> methods,
+        List<String> headers,
+        List<String> consumes,
+        List<String> produces
+) {
 
-    private final List<String> paths;
-    private final List<RequestMethod> methods;
-    private final List<String> headers;
-    private final List<String> consumes;
-    private final List<String> produces;
-
-    public RequestMethod method() {
-        return methods.get(0);
+    public RequestDef {
+        paths = Immutables.copyOf(paths);
+        methods = Immutables.copyOf(methods);
+        headers = Immutables.copyOf(headers);
+        consumes = Immutables.copyOf(consumes);
+        produces = Immutables.copyOf(produces);
     }
 
     public static RequestDef of(RequestMapping source) {
@@ -59,8 +60,12 @@ public class RequestDef {
                 .build();
     }
 
+    public RequestMethod method() {
+        return methods.getFirst();
+    }
+
     public String getPrimaryPath() {
         return paths.isEmpty() ? ""
-                : paths.get(0);
+                : paths.getFirst();
     }
 }
