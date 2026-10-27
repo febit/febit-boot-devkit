@@ -1,0 +1,53 @@
+/*
+ * Copyright 2022-present febit.org (support@febit.org)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.febit.boot.devkit.jooq.runtime.spi;
+
+import org.jooq.codegen.GeneratorStrategy;
+import org.jooq.meta.Definition;
+import org.jooq.meta.TableDefinition;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+
+class DefaultClassNameDecoratorTest {
+
+    final DefaultClassNameDecorator decorator = new DefaultClassNameDecorator();
+
+    @Test
+    void decorateByMode() {
+        var def = mock(Definition.class);
+
+        assertEquals("IFoo", decorator.decorate(def, "Foo", GeneratorStrategy.Mode.INTERFACE));
+        assertEquals("FooRecord", decorator.decorate(def, "Foo", GeneratorStrategy.Mode.RECORD));
+        assertEquals("FooDao", decorator.decorate(def, "Foo", GeneratorStrategy.Mode.DAO));
+        assertEquals("FooPO", decorator.decorate(def, "Foo", GeneratorStrategy.Mode.POJO));
+    }
+
+    @Test
+    void defaultModeDependsOnDefinitionType() {
+        assertEquals("TFoo", decorator.decorate(mock(TableDefinition.class), "Foo",
+                GeneratorStrategy.Mode.DEFAULT));
+        assertEquals("Foo", decorator.decorate(mock(Definition.class), "Foo",
+                GeneratorStrategy.Mode.DEFAULT));
+    }
+
+    @Test
+    void otherModesKeepName() {
+        assertEquals("Foo", decorator.decorate(mock(TableDefinition.class), "Foo",
+                GeneratorStrategy.Mode.ENUM));
+    }
+}

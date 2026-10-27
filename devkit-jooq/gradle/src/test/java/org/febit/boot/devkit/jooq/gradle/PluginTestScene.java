@@ -41,10 +41,10 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.febit.boot.devkit.jooq.gradle.JooqCodegenExtension.DIR_GENERATED_SRC;
 import static org.febit.boot.devkit.jooq.gradle.JooqCodegenPlugin.TASK_GENERATE_JOOQ;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Getter
 @Accessors(fluent = true)
@@ -119,6 +119,9 @@ public class PluginTestScene {
         customizer.accept(extension().getEmbeddedPostgres());
     }
 
+    /**
+     * Runs the codegen task, assertions are up to the test.
+     */
     public void execute() {
         extension().getGenerator().get()
                 .getDatabase()
@@ -130,15 +133,21 @@ public class PluginTestScene {
                 (JooqCodegenGenerateTask) tasks().getByName(TASK_GENERATE_JOOQ)
         );
 
+        executeTask(codegenTask);
+    }
+
+    /**
+     * Asserts the sources which every scene should generate.
+     */
+    public void assertCommonSources() {
         assertTrue(isFileExists("src/codegen-jooq/java"));
         assertTrue(isFileExists("src/codegen-jooq/resources"));
         assertTrue(isFileExists("src/main/resources/db/migration"));
 
-        executeTask(codegenTask);
-
         var srcDirs = GradleUtils.mainSourceSet(project).getAllJava().getSrcDirs();
-        assertThat(srcDirs)
-                .contains(extension().getGeneratedSourceDir().get().getAsFile());
+        assertTrue(srcDirs.contains(
+                extension().getGeneratedSourceDir().get().getAsFile()
+        ));
 
         assertTrue(isFileExists(TARGET_DIR + "/DefaultCatalog.java"));
         assertTrue(isFileExists(TARGET_DIR + "/SceneTest.java"));
@@ -155,8 +164,9 @@ public class PluginTestScene {
     ) throws IOException {
         JooqCodegenPlugin.INTERNAL_TESTING_MODE.set(true);
 
-        var projectDir = new File("./build/test-plugin-scenes/" + name);
-        FileUtils.copyDirectory(new File("./src/test/scene-" + template), projectDir);
+        var projectDir = new File("build/test-plugin-scenes/" + name);
+        FileUtils.deleteDirectory(projectDir);
+        FileUtils.copyDirectory(new File("src/test/scene-" + template), projectDir);
 
         var project = (ProjectInternal) ProjectBuilder.builder()
                 .withProjectDir(projectDir)
@@ -181,8 +191,8 @@ public class PluginTestScene {
         project.getPlugins().apply(JooqCodegenPlugin.class);
 
         var javaPluginExtension = project.getExtensions().getByType(JavaPluginExtension.class);
-        javaPluginExtension.setSourceCompatibility(JavaVersion.VERSION_17);
-        javaPluginExtension.setTargetCompatibility(JavaVersion.VERSION_17);
+        javaPluginExtension.setSourceCompatibility(JavaVersion.VERSION_21);
+        javaPluginExtension.setTargetCompatibility(JavaVersion.VERSION_21);
 
         var springBootVersion = System.getProperty("APP_SPRING_BOOT_VERSION");
         if (StringUtils.isEmpty(springBootVersion)) {

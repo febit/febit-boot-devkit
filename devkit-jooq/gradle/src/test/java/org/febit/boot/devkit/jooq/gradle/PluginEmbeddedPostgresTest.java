@@ -22,12 +22,12 @@ import java.util.Map;
 
 import static org.febit.boot.devkit.jooq.gradle.PluginTestScene.SCHEMA_FOO;
 import static org.febit.boot.devkit.jooq.gradle.PluginTestScene.TARGET_DIR;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PluginEmbeddedPostgresTest {
 
     @Test
-    void tasks() throws IOException {
+    void generateSources() throws IOException {
         var scene = PluginTestScene.create("pg", "pg-embedded");
         scene.embeddedPostgres(conf -> {
         });
@@ -39,6 +39,7 @@ class PluginEmbeddedPostgresTest {
         ));
 
         scene.execute();
+        scene.assertCommonSources();
 
         assertTrue(scene.isFileExists(TARGET_DIR + "/po/FooPO.java"));
         assertTrue(scene.isFileExists(TARGET_DIR + "/record/FooRecord.java"));

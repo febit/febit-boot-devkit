@@ -22,14 +22,14 @@ import java.util.Map;
 
 import static org.febit.boot.devkit.jooq.gradle.PluginTestScene.SCHEMA_FOO;
 import static org.febit.boot.devkit.jooq.gradle.PluginTestScene.TARGET_DIR;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PluginH2Test {
 
     static final String DB_PATH = "build/tmp/codegen-jooq-db/data";
 
     @Test
-    void tasks() throws IOException {
+    void generateSources() throws IOException {
         var scene = PluginTestScene.create("h2", "h2");
 
         scene.presetJdbc(jdbc ->
@@ -48,6 +48,7 @@ class PluginH2Test {
         ));
 
         scene.execute();
+        scene.assertCommonSources();
 
         assertTrue(scene.isFileExists(DB_PATH + ".mv.db"));
 

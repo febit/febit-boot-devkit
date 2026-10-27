@@ -16,6 +16,7 @@
 package org.febit.boot.devkit.jooq.gradle.container;
 
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Manual smoke test, run it by the {@code integrationTest} task (tag: integration).
+ */
 @Slf4j
 @Disabled
+@Tag("integration")
 class ContainerDatabaseIT {
 
     @Test
