@@ -21,20 +21,24 @@ import org.apache.commons.lang3.Strings;
 import org.febit.devkit.gradle.util.JavaUtils;
 import org.febit.lang.Tuple2;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ClassNamingImpl implements ClassNaming {
+public class ClassNamingImpl implements ClassNaming, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private final Map<String, String> mapping = new HashMap<>();
 
-    private final List<Tuple2<String, String>> pkgPairs = new ArrayList<>();
-    private final List<Tuple2<String, String>> suffixPairs = new ArrayList<>();
+    private final List<Pair> pkgPairs = new ArrayList<>();
+    private final List<Pair> suffixPairs = new ArrayList<>();
 
     private String prefix;
     private String suffix;
@@ -55,22 +59,22 @@ public class ClassNamingImpl implements ClassNaming {
     }
 
     public ClassNamingImpl replacePackage(String from, String to) {
-        pkgPairs.add(Tuple2.of(from, to));
+        pkgPairs.add(new Pair(from, to));
         return this;
     }
 
     public ClassNamingImpl replacePackages(Collection<Tuple2<String, String>> rules) {
-        pkgPairs.addAll(rules);
+        rules.forEach(rule -> pkgPairs.add(new Pair(rule.v1(), rule.v2())));
         return this;
     }
 
     public ClassNamingImpl replaceSuffix(String from, String to) {
-        suffixPairs.add(Tuple2.of(from, to));
+        suffixPairs.add(new Pair(from, to));
         return this;
     }
 
     public ClassNamingImpl replaceSuffixes(Collection<Tuple2<String, String>> rules) {
-        suffixPairs.addAll(rules);
+        rules.forEach(rule -> suffixPairs.add(new Pair(rule.v1(), rule.v2())));
         return this;
     }
 
@@ -86,11 +90,11 @@ public class ClassNamingImpl implements ClassNaming {
             buf.append(prefix);
         }
         for (var pair : suffixPairs) {
-            if (!name.endsWith(pair.v1())) {
+            if (!name.endsWith(pair.from())) {
                 continue;
             }
-            name = Strings.CS.removeEnd(name, pair.v1())
-                    + pair.v2();
+            name = Strings.CS.removeEnd(name, pair.from())
+                    + pair.to();
         }
 
         buf.append(name);
@@ -103,11 +107,11 @@ public class ClassNamingImpl implements ClassNaming {
 
     private String fixPkg(String pkg) {
         for (var pair : pkgPairs) {
-            if (!pkg.startsWith(pair.v1())) {
+            if (!pkg.startsWith(pair.from())) {
                 continue;
             }
-            pkg = pair.v2()
-                    + Strings.CS.removeStart(pkg, pair.v1());
+            pkg = pair.to()
+                    + Strings.CS.removeStart(pkg, pair.from());
         }
         return pkg;
     }
@@ -127,5 +131,22 @@ public class ClassNamingImpl implements ClassNaming {
         String name = JavaUtils.classSimpleName(origin);
         return fixPkg(pkg)
                 + fixName(name);
+    }
+
+    public String signature() {
+        return "prefix=" + StringUtils.defaultString(prefix)
+                + ",suffix=" + StringUtils.defaultString(suffix)
+                + ",mapping=" + new TreeMap<>(mapping)
+                + ",packages=" + describe(pkgPairs)
+                + ",suffixes=" + describe(suffixPairs);
+    }
+
+    private static String describe(List<Pair> pairs) {
+        return pairs.stream()
+                .map(pair -> pair.from() + "->" + pair.to())
+                .collect(Collectors.joining(",", "[", "]"));
+    }
+
+    private record Pair(String from, String to) implements Serializable {
     }
 }

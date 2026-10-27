@@ -16,14 +16,25 @@
 package org.febit.boot.devkit.rest.client.gradle;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.file.ConfigurableFileCollection;
+import org.gradle.api.file.DirectoryProperty;
+import org.gradle.api.provider.ListProperty;
+import org.gradle.api.provider.Property;
+import org.gradle.api.provider.SetProperty;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Classpath;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.internal.classpath.DefaultClassPath;
 
 import org.febit.boot.devkit.rest.client.ClientCodegen;
 import org.febit.boot.devkit.rest.client.MetaResolver;
+import org.febit.boot.devkit.rest.client.util.ClassNamingImpl;
 import org.febit.boot.devkit.rest.client.util.ClassNamings;
-import org.febit.devkit.gradle.util.GradleUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
@@ -31,12 +42,42 @@ import org.jspecify.annotations.NullMarked;
 import java.net.URLClassLoader;
 import javax.inject.Inject;
 
-import static org.febit.boot.devkit.rest.client.gradle.Constants.EXT_NAME;
-
 @Slf4j
 @NullMarked
 @CacheableTask
-public class RestClientCodegenExtensionTask extends DefaultTask {
+public abstract class RestClientCodegenExtensionTask extends DefaultTask {
+
+    /**
+     * Classes to scan, typically the output of the source project.
+     */
+    @InputFiles
+    @Classpath
+    public abstract ConfigurableFileCollection getSourceClasspath();
+
+    @Input
+    public abstract SetProperty<String> getScanPackages();
+
+    @Input
+    public abstract SetProperty<String> getExcludedClasses();
+
+    @Input
+    @Optional
+    public abstract Property<String> getBasePackage();
+
+    @Input
+    public abstract ListProperty<String> getNamingSignatures();
+
+    @Internal
+    public abstract Property<ClassNamingImpl> getGlobalNaming();
+
+    @Internal
+    public abstract Property<ClassNamingImpl> getClientNaming();
+
+    @Internal
+    public abstract Property<ClassNamingImpl> getPojoNaming();
+
+    @OutputDirectory
+    public abstract DirectoryProperty getTargetDir();
 
     @Inject
     public RestClientCodegenExtensionTask() {
@@ -44,65 +85,43 @@ public class RestClientCodegenExtensionTask extends DefaultTask {
         setDescription("Generate api definitions as REST clients.");
     }
 
-    private void generate(
-            RestClientCodegenExtension extension,
-            ClassLoader classloader
-    ) {
+    @TaskAction
+    public void run() {
+        var classloader = resolveClassLoader();
+
         var metaResolver = MetaResolver.create(classloader);
 
-        var beans = metaResolver.scanBeans(extension.getScanPackages());
+        var beans = metaResolver.scanBeans(getScanPackages().get());
         var clients = metaResolver.resolveClients(beans.values());
 
         log.info("Found [{}] clients", clients.size());
 
+        var globalNaming = getGlobalNaming().get();
+
         var codegen = ClientCodegen.builder()
                 .beans(beans)
                 .clients(clients)
-                .clientBasePackage(extension.getClient().getBasePackage())
+                .clientBasePackage(getBasePackage().getOrNull())
                 .clientNaming(ClassNamings.chain(
-                        extension.getNaming().getGlobal(),
-                        extension.getNaming().getClient()
+                        globalNaming,
+                        getClientNaming().get()
                 ))
                 .pojoNaming(ClassNamings.chain(
-                        extension.getNaming().getGlobal(),
-                        extension.getNaming().getPojo()
+                        globalNaming,
+                        getPojoNaming().get()
                 ))
-                .excludedClasses(extension.getExcludedClasses())
-                .targetDir(extension.getTargetSourceDir())
+                .excludedClasses(getExcludedClasses().get())
+                .targetDir(getTargetDir().getAsFile().get())
                 .build();
 
         codegen.emit();
     }
 
-    private RestClientCodegenExtension getExtension() {
-        return getProject().getExtensions()
-                .getByType(RestClientCodegenExtension.class);
-    }
-
-    @TaskAction
-    public void run() {
-        var extension = getExtension();
-        var classloader = resolveClassLoader();
-
-        generate(extension, classloader);
-    }
-
     private ClassLoader resolveClassLoader() {
-        var extension = getExtension();
-
-        var sourceProj = extension.getSourceProject();
-        if (sourceProj == null) {
-            throw new IllegalStateException(EXT_NAME + ".sourceProject is not set.");
-        }
-
-        var classpath = GradleUtils.mainSourceSet(sourceProj).getOutput()
-                .plus(sourceProj.getConfigurations().getByName("compileClasspath"));
-
-        var urls = DefaultClassPath.of(classpath.getFiles())
+        var urls = DefaultClassPath.of(getSourceClasspath().getFiles())
                 .getAsURLArray();
 
         // NOTE: Using current classloader as parent.
         return new URLClassLoader(urls, getClass().getClassLoader());
     }
-
 }

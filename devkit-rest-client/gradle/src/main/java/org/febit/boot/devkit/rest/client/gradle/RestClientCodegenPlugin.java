@@ -15,6 +15,7 @@
  */
 package org.febit.boot.devkit.rest.client.gradle;
 
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -22,6 +23,8 @@ import org.gradle.api.plugins.JavaPlugin;
 
 import org.febit.devkit.gradle.util.FolderUtils;
 import org.febit.devkit.gradle.util.GradleUtils;
+
+import java.util.List;
 
 public class RestClientCodegenPlugin implements Plugin<Project> {
 
@@ -46,6 +49,12 @@ public class RestClientCodegenPlugin implements Plugin<Project> {
         FolderUtils.mkdirs(targetDir);
         GradleUtils.mainSourceSet(proj).getJava().srcDir(targetDir);
 
+        var sourceProj = extension.getSourceProject();
+        if (sourceProj == null) {
+            throw new GradleException(Constants.EXT_NAME + ".sourceProject is not set.");
+        }
+
+        var naming = extension.getNaming();
         var tasks = proj.getTasks();
 
         // Depend on lombok plugin
@@ -53,10 +62,28 @@ public class RestClientCodegenPlugin implements Plugin<Project> {
                 task.dependsOn(Constants.TASK_GEN_CLIENT)
         );
 
-        tasks.named(Constants.TASK_GEN_CLIENT, task -> {
-            var sourceProjectCompileTask = extension.getSourceProject().getTasks()
-                    .getByName(JavaPlugin.COMPILE_JAVA_TASK_NAME);
-            task.dependsOn(sourceProjectCompileTask);
+        tasks.named(Constants.TASK_GEN_CLIENT, RestClientCodegenExtensionTask.class, task -> {
+            task.dependsOn(sourceProj.getTasks()
+                    .getByName(JavaPlugin.COMPILE_JAVA_TASK_NAME));
+
+            // Inputs & outputs, so that the task can be UP-TO-DATE or loaded from cache.
+            task.getSourceClasspath().from(
+                    GradleUtils.mainSourceSet(sourceProj).getOutput(),
+                    sourceProj.getConfigurations()
+                            .getByName(JavaPlugin.COMPILE_CLASSPATH_CONFIGURATION_NAME)
+            );
+            task.getTargetDir().set(targetDir);
+            task.getScanPackages().set(extension.getScanPackages());
+            task.getExcludedClasses().set(extension.getExcludedClasses());
+            task.getBasePackage().set(extension.getClient().getBasePackage());
+            task.getNamingSignatures().set(List.of(
+                    "global:" + naming.getGlobal().signature(),
+                    "client:" + naming.getClient().signature(),
+                    "pojo:" + naming.getPojo().signature()
+            ));
+            task.getGlobalNaming().set(naming.getGlobal());
+            task.getClientNaming().set(naming.getClient());
+            task.getPojoNaming().set(naming.getPojo());
         });
     }
 
