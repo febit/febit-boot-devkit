@@ -1,0 +1,61 @@
+/*
+ * Copyright 2022-present febit.org (support@febit.org)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.febit.boot.devkit.rest.client.fixture;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import org.febit.lang.protocol.IResponse;
+import org.febit.lang.protocol.Page;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    @GetMapping("/{id}")
+    public UserInfo get(@PathVariable("id") long id) {
+        return null;
+    }
+
+    @GetMapping("/list")
+    public List<UserInfo> list(@RequestParam(value = "keyword", required = false) String keyword) {
+        return List.of();
+    }
+
+    @GetMapping("/page")
+    public IResponse<Page<UserInfo>> page() {
+        return null;
+    }
+
+    @GetMapping("/list-response")
+    public IResponse<List<UserInfo>> listResponse() {
+        return null;
+    }
+
+    @GetMapping("/status")
+    public List<UserStatus> statuses() {
+        return List.of();
+    }
+
+    // Not a mapping, must be ignored
+    public void noMapping() {
+    }
+}

@@ -17,6 +17,10 @@ package org.febit.boot.devkit.rest.client.util;
 
 import org.junit.jupiter.api.Test;
 
+import org.febit.lang.Tuple2;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -41,6 +45,24 @@ class ClassNamingImplTest {
                 .replace("org.a.Foo", "org.b.Bar");
 
         assertEquals("org.b.Bar", naming.resolve("org.a.Foo"));
+    }
+
+    @Test
+    void nestedClassName() {
+        var naming = new ClassNamingImpl()
+                .prefix("X")
+                .suffix("Y");
+
+        assertEquals("a.b.XFooYXBarY", naming.resolve("a.b.Foo$Bar"));
+    }
+
+    @Test
+    void rulesByCollection() {
+        var naming = new ClassNamingImpl()
+                .replacePackages(List.of(Tuple2.of("org.a", "org.x")))
+                .replaceSuffixes(List.of(Tuple2.of("Controller", "Client")));
+
+        assertEquals("org.x.c.DemoClient", naming.resolve("org.a.c.DemoController"));
     }
 
     @Test
