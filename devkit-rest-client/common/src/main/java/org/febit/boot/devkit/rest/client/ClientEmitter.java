@@ -90,7 +90,7 @@ class ClientEmitter {
 
         out.appendClassHeader();
 
-        if (client.deprecated()) {
+        if (Boolean.TRUE.equals(client.deprecated())) {
             out.append("@Deprecated\n");
         }
 
@@ -114,7 +114,7 @@ class ClientEmitter {
     private void emitApi(ApiDef api) {
         out.append('\n');
 
-        if (api.deprecated()) {
+        if (Boolean.TRUE.equals(api.deprecated())) {
             out.tab(1).append("@Deprecated\n");
         }
 
@@ -189,7 +189,7 @@ class ClientEmitter {
                 ? param.bindName()
                 : param.name();
 
-        if (param.deprecated()) {
+        if (Boolean.TRUE.equals(param.deprecated())) {
             out.append("@Deprecated ");
         }
 
