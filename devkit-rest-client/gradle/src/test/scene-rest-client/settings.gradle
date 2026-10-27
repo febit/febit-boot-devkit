@@ -1,0 +1,4 @@
+rootProject.name = 'rest-client-fixture'
+
+include 'api'
+include 'client'

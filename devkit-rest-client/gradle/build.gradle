@@ -23,5 +23,6 @@ dependencies {
   compileOnly gradleApi()
   testImplementation localGroovy()
   testImplementation gradleApi()
+  testImplementation gradleTestKit()
 }
 

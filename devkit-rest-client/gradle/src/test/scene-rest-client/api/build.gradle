@@ -1,0 +1,8 @@
+plugins {
+  id 'java-library'
+}
+
+dependencies {
+  // Passed by the test, so that the fixture does not need any repository.
+  compileOnly files(providers.gradleProperty('fixture.springWebJar').get())
+}

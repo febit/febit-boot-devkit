@@ -1,0 +1,14 @@
+plugins {
+  id 'java-library'
+  id 'org.febit.boot.rest-client'
+}
+
+// The plugin orders lombok config generation after the codegen task.
+tasks.register('generateEffectiveLombokConfig')
+
+codegenRestClient {
+  scan('org.fixture.api')
+  client {
+    basePackage = 'org.fixture.client'
+  }
+}
