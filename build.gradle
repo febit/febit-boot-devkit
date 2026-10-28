@@ -57,12 +57,12 @@ allprojects { subproject ->
   }
 
   codegenModule {
-    defaultTemplate = fromFile("$rootDir/etc/module.java.tmpl")
+    defaultTemplate = fromFile("$rootDir/gradle/module.java.tmpl")
   }
 
   spotless {
     java {
-      licenseHeaderFile rootProject.file('etc/license-header.txt')
+      licenseHeaderFile rootProject.file('gradle/license-header.txt')
 
       shortenFullyQualifiedTypes()
 
